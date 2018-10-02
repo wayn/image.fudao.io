@@ -5,6 +5,7 @@ const app = express()
 // Global consts
 const CLIENT_ID = '4ac536f028703b3c1d540f7bf3fd611fd9b7ae5d87b9cab901caacf6f49ecdd8'
 const URL_PHOTO_DAILY = 'https://api.unsplash.com/photos'
+const URL_COLLECTION_DAILY = 'https://api.unsplash.com/collections'
 
 
 // Get daily photos api
@@ -33,7 +34,29 @@ app.get('/api/photos/daily', function (req, res, next) {
 });
 
 // Get daily collections api
+app.get('/api/collections/daily', function (req, res, next) {
 
+  var options = {url: URL_COLLECTION_DAILY, headers: {'authorization':'Client-ID '+CLIENT_ID}}
+
+  request(options, function(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var body = JSON.parse(body).map(obj => {
+        delete obj.curated
+        delete obj.private
+        delete obj.tags
+        delete obj.cover_photo
+        delete obj.user
+        delete obj.links
+        delete obj.featured
+        delete obj.description
+        delete obj.share_key
+
+        return obj
+      })
+      res.send(body)
+    }
+  })
+});
 
 // Get daily explore api
 
