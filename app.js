@@ -62,7 +62,7 @@ app.get('/api/collections/daily', function (req, res, next) {
 // Get daily explore api
 app.get('/api/search/photos', function (req, res, next) {
 
-  var query = req.params['key']
+  var query = req.query['key']
   var options = {url: URL_PHOTO_SEARCH+'?query='+query, headers: {'authorization':'Client-ID '+CLIENT_ID,'Content-type': 'application/json'}}
 
   request(options, function(error, response, body) {
