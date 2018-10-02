@@ -6,6 +6,7 @@ const app = express()
 const CLIENT_ID = '4ac536f028703b3c1d540f7bf3fd611fd9b7ae5d87b9cab901caacf6f49ecdd8'
 const URL_PHOTO_DAILY = 'https://api.unsplash.com/photos'
 const URL_COLLECTION_DAILY = 'https://api.unsplash.com/collections'
+const URL_PHOTO_SEARCH = 'https://api.unsplash.com/search/photos'
 
 
 // Get daily photos api
@@ -59,6 +60,34 @@ app.get('/api/collections/daily', function (req, res, next) {
 });
 
 // Get daily explore api
+app.get('/api/search/photos', function (req, res, next) {
+
+  var query = req.params['key']
+  var options = {url: URL_PHOTO_SEARCH+'?query='+query, headers: {'authorization':'Client-ID '+CLIENT_ID,'Content-type': 'application/json'}}
+
+  request(options, function(error, response, body) {
+    var body = JSON.parse(body)
+    if (!error && response.statusCode == 200) {
+      var results = body.results.map(obj => {
+        delete obj.links
+        delete obj.categories
+        delete obj.current_user_collections
+        delete obj.user
+        delete obj.liked_by_user
+        delete obj.sponsored
+        delete obj.slug
+        delete obj.likes
+        delete obj.description
+        delete obj.tags
+        delete obj.photo_tags
+
+        return obj
+      })
+      body.results = results
+      res.send(body)
+    }
+  })
+});
 
 
 // middleware with an arity of 4 are considered
