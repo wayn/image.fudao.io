@@ -59,11 +59,15 @@ app.get('/api/collections/daily', function (req, res, next) {
         delete obj.description
         delete obj.share_key
 
-        obj.urls.raw = obj.urls.raw.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
-        obj.urls.full = obj.urls.full.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
-        obj.urls.regular = obj.urls.regular.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
-        obj.urls.small = obj.urls.small.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
-        obj.urls.thumb = obj.urls.thumb.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.preview_photos = obj.preview_photos.map(photo => {
+          photo.urls.raw = photo.urls.raw.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+          photo.urls.full = photo.urls.full.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+          photo.urls.regular = photo.urls.regular.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+          photo.urls.small = photo.urls.small.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+          photo.urls.thumb = photo.urls.thumb.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+
+          return photo
+        })
 
         return obj
       })
