@@ -12,7 +12,8 @@ const URL_PHOTO_SEARCH = 'https://api.unsplash.com/search/photos'
 // Get daily photos api
 app.get('/api/photos/daily', function (req, res, next) {
 
-  var options = {url: URL_PHOTO_DAILY, headers: {'authorization':'Client-ID '+CLIENT_ID}}
+  var page = req.query['page']
+  var options = {url: URL_PHOTO_DAILY+'?page='+page, headers: {'authorization':'Client-ID '+CLIENT_ID}}
 
   request(options, function(error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -63,7 +64,8 @@ app.get('/api/collections/daily', function (req, res, next) {
 app.get('/api/search/photos', function (req, res, next) {
 
   var query = req.query['key']
-  var options = {url: URL_PHOTO_SEARCH+'?query='+query, headers: {'authorization':'Client-ID '+CLIENT_ID,'Content-type': 'application/json'}}
+  var page = req.query['page']
+  var options = {url: URL_PHOTO_SEARCH+'?query='+query+'&page='+page, headers: {'authorization':'Client-ID '+CLIENT_ID,'Content-type': 'application/json'}}
 
   request(options, function(error, response, body) {
     var body = JSON.parse(body)
