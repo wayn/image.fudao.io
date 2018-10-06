@@ -28,6 +28,12 @@ app.get('/api/photos/daily', function (req, res, next) {
         delete obj.likes
         delete obj.description
 
+        obj.urls.raw = obj.urls.raw.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.full = obj.urls.full.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.regular = obj.urls.regular.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.small = obj.urls.small.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.thumb = obj.urls.thumb.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+
         return obj
       })
       res.send(body)
@@ -52,6 +58,12 @@ app.get('/api/collections/daily', function (req, res, next) {
         delete obj.featured
         delete obj.description
         delete obj.share_key
+
+        obj.urls.raw = obj.urls.raw.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.full = obj.urls.full.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.regular = obj.urls.regular.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.small = obj.urls.small.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.thumb = obj.urls.thumb.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
 
         return obj
       })
@@ -82,6 +94,12 @@ app.get('/api/search/photos', function (req, res, next) {
         delete obj.description
         delete obj.tags
         delete obj.photo_tags
+
+        obj.urls.raw = obj.urls.raw.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.full = obj.urls.full.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.regular = obj.urls.regular.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.small = obj.urls.small.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
+        obj.urls.thumb = obj.urls.thumb.replace('https://images.unsplash.com', 'https://image.fudao.io/images')
 
         return obj
       })
