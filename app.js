@@ -1,5 +1,6 @@
 const express = require('express')
 const request = require('request')
+var Agent = require('socks5-https-client/lib/Agent');
 const app = express()
 
 // Global consts
@@ -13,7 +14,11 @@ const URL_PHOTO_SEARCH = 'https://api.unsplash.com/search/photos'
 app.get('/api/photos/daily', function (req, res, next) {
 
   var page = (typeof req.query['page'] === "undefined") ? '1' : req.query['page']
-  var options = {url: URL_PHOTO_DAILY+'?page='+page, headers: {'authorization':'Client-ID '+CLIENT_ID}}
+  var options = {url: URL_PHOTO_DAILY+'?page='+page,
+             headers: {'authorization':'Client-ID '+CLIENT_ID},
+           strictSSL: true,
+          agentClass: Agent,
+        agentOptions: {socksHost: '127.0.0.1', socksPort: 1080}}
 
   request(options, function(error, response, body) {
     if (!error && response.statusCode == 200) {
