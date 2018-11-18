@@ -49,7 +49,11 @@ app.get('/api/photos/daily', function (req, res, next) {
 // Get daily collections api
 app.get('/api/collections/daily', function (req, res, next) {
 
-  var options = {url: URL_COLLECTION_DAILY, headers: {'authorization':'Client-ID '+CLIENT_ID}}
+  var options = {url: URL_COLLECTION_DAILY,
+             headers: {'authorization':'Client-ID '+CLIENT_ID},
+           strictSSL: true,
+          agentClass: Agent,
+        agentOptions: {socksHost: '127.0.0.1', socksPort: 1080}}
 
   request(options, function(error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -86,7 +90,12 @@ app.get('/api/search/photos', function (req, res, next) {
 
   var query = (typeof req.query['key'] === "undefined") ? '' : req.query['key']
   var page = (typeof req.query['page'] === "undefined") ? '1' : req.query['page']
-  var options = {url: URL_PHOTO_SEARCH+'?query='+query+'&page='+page, headers: {'authorization':'Client-ID '+CLIENT_ID,'Content-type': 'application/json'}}
+  var options = {url: URL_PHOTO_SEARCH+'?query='+query+'&page='+page,
+             headers: {'authorization':'Client-ID '+CLIENT_ID,'Content-type': 'application/json'},
+           strictSSL: true,
+          agentClass: Agent,
+        agentOptions: {socksHost: '127.0.0.1', socksPort: 1080}
+            }
 
   request(options, function(error, response, body) {
     var body = JSON.parse(body)
